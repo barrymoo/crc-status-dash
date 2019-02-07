@@ -22,14 +22,23 @@ db = client.get_default_database()
 
 # Get the time, rounded down to the nearest 15 minutes
 time = datetime.now()
-time = time - timedelta(minutes=time.minute % 15,
-                        seconds=time.second,
-                        microseconds=time.microsecond)
-time_string = time.strftime('%m/%d/%y-%H:%M')
+time = time - timedelta(
+    minutes=time.minute % 15, seconds=time.second, microseconds=time.microsecond
+)
+time_string = time.strftime("%m/%d/%y-%H:%M")
 
 # Get [Allocated, Idle, O, Total] and convert to ints
-cpu_states = [int(x) for x in run_command_no_split(cpus_command).split('\n')[-1].split('/')]
+cpu_states = [
+    int(x) for x in run_command_no_split(cpus_command).split("\n")[-1].split("/")
+]
 
 # Write initial data
-#print({'cluster': 'mpi', 'allocated': cpu_states[0], 'total': cpu_states[3], 'time': time_string})
-db['status'].insert_one({'cluster': 'smp', 'allocated': cpu_states[0], 'total': cpu_states[3], 'time': time_string})
+# print({'cluster': 'mpi', 'allocated': cpu_states[0], 'total': cpu_states[3], 'time': time_string})
+db["status"].insert_one(
+    {
+        "cluster": "smp",
+        "allocated": cpu_states[0],
+        "total": cpu_states[3],
+        "time": time_string,
+    }
+)

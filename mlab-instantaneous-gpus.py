@@ -8,7 +8,7 @@ from urllib import quote
 
 def run_command_no_split(command):
     sp = Popen(split(command), stdout=PIPE)
-    return sp.communicate()[0].strip().split('\n')[1:]
+    return sp.communicate()[0].strip().split("\n")[1:]
 
 
 # Generate the number of GPUs
@@ -23,14 +23,18 @@ db = client.get_default_database()
 
 # Get the time, rounded down to the nearest 15 minutes
 time = datetime.now()
-time = time - timedelta(minutes=time.minute % 15,
-                        seconds=time.second,
-                        microseconds=time.microsecond)
-time_string = time.strftime('%m/%d/%y-%H:%M')
+time = time - timedelta(
+    minutes=time.minute % 15, seconds=time.second, microseconds=time.microsecond
+)
+time_string = time.strftime("%m/%d/%y-%H:%M")
 
-total = sum([int(x.split(':')[-1]) for x in run_command_no_split(total_command)])
-allocated = sum([int(x.split(':')[-1]) for x in run_command_no_split(allocated_command)])
+total = sum([int(x.split(":")[-1]) for x in run_command_no_split(total_command)])
+allocated = sum(
+    [int(x.split(":")[-1]) for x in run_command_no_split(allocated_command)]
+)
 
 # Write initial data
-#print({'cluster': 'mpi', 'allocated': allocated, 'total': total, 'time': time_string})
-db['status'].insert_one({'cluster': 'gpu', 'allocated': allocated, 'total': total, 'time': time_string})
+# print({'cluster': 'mpi', 'allocated': allocated, 'total': total, 'time': time_string})
+db["status"].insert_one(
+    {"cluster": "gpu", "allocated": allocated, "total": total, "time": time_string}
+)
