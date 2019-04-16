@@ -21,5 +21,5 @@ center.
 
 #### Data Collection
 
-Two examples of data collection scripts are given. One for a CPU cluster and
-another for GPU cluster.
+One example script `status.py` is given to show how you can collect information
+from both CPU and GPU clusters.

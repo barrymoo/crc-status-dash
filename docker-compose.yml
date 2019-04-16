@@ -3,6 +3,8 @@ services:
   web:
     build: .
     ports:
-      - "8000:8000"
-    command: gunicorn -w 1 -b :8000 app:server
+      - "5000:5000"
+    command: uwsgi --http :5000 --module app:server --uid nobody --master
     image: barrymoo/crc-status-dash
+    env_file:
+      - .env
