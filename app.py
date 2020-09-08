@@ -10,6 +10,8 @@ import pymongo
 
 
 def query_data(limit):
+    client = pymongo.MongoClient(uri)
+    db = client.get_database()
     cursor = (
         db["status"]
         .find({})
@@ -127,6 +129,8 @@ db = client.get_database()
 limit = db["status"].count_documents({})
 if limit > 24:
     limit = 24
+del client
+del db
 
 clusters = ["smp", "gpu", "mpi", "htc"]
 
