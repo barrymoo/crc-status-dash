@@ -115,7 +115,6 @@ def generate_layout(data):
 # Initialize the Dash app
 app = dash.Dash(
     __name__,
-    external_stylesheets=["https://codepen.io/barrymoo/pen/rbaKVJ.css"],
 )
 server = app.server
 
